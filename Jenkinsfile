@@ -1,7 +1,10 @@
 pipeline {
   agent any
   environment {
-    REGISTRY = "Ekimkuznetsov/petclinic"
+    NAME = "petclinic"
+    VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
+    IMAGE = "${NAME}:${VERSION}"
+    registry = "Ekimkuznetsov/petclinic"
     registryCredential = 'dockerhub-petclinic'
     dockerImage = ''
   }
@@ -18,9 +21,10 @@ pipeline {
       }
     }
     stage('Artifact-creation') {
-      steps{
-        script {
-          dockerImage = docker.build REGISTRY + ":latest"
+      steps {
+        echo "Running ${VERSION} on ${env.JENKINS_URL}"
+        sh "docker build -t ${NAME} ."
+        sh "docker tag ${NAME}:latest ${IMAGE_REPO}/${NAME}:${VERSION}"
         }
       }
     }
