@@ -25,11 +25,10 @@ pipeline {
         echo "Running ${VERSION} on ${env.JENKINS_URL}"
         sh "docker build -t ${NAME} ."
         sh "docker tag ${NAME}:latest ${IMAGE_REPO}/${NAME}:${VERSION}"
-        }
       }
     }
     stage('Deploy Image') {
-      steps{
+      steps {
          script {
             docker.withRegistry( '', registryCredential ) {
             dockerImage.push()
