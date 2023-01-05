@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    REGISTRY = "petclinic"
+    REGISTRY = "Ekimkuznetsov/petclinic"
     registryCredential = credentials('dockerhub-petclinic')
     dockerImage = ''
   }
@@ -15,11 +15,6 @@ pipeline {
     stage('Build') {
       steps {
         sh './mvnw package'   
-      }
-      post {
-        always {
-          sh 'mvn test'
-        }
       }
     }
     stage('Artifact-creation') {
