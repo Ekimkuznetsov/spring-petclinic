@@ -22,9 +22,8 @@ pipeline {
     }
     stage('Artifact-creation') {
       steps {
-        echo "Running ${VERSION} on ${env.JENKINS_URL}"
-        dockerImage = docker.build -t ${NAME} ."
-        sh "docker tag ${NAME}:latest ${IMAGE_REPO}/${NAME}:${VERSION}"
+        script {
+          dockerImage = docker.build -t ${NAME} .
       }
     }
     stage('Deploy Image') {
