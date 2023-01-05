@@ -20,19 +20,10 @@ pipeline {
         sh './mvnw package'   
       }
     }
-    stage('Artifact-creation') {
+    stage('Create Artifact') {
       steps {
         script {
           dockerImage = docker.build imagename
-        }
-      }
-    }
-    stage('Deploy Image') {
-      steps {
-         script {
-            docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
         }
       }
     }
