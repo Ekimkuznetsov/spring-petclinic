@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     REGISTRY = "Ekimkuznetsov/petclinic"
-    registryCredential = credentials('dockerhub-petclinic')
+    registryCredential = 'dockerhub-petclinic'
     dockerImage = ''
   }
 
