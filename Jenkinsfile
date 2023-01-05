@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    NAME = "petclinic"
+    imagename = "petclinic"
     VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
     IMAGE = "${NAME}:${VERSION}"
     registry = "Ekimkuznetsov/petclinic"
@@ -23,7 +23,7 @@ pipeline {
     stage('Artifact-creation') {
       steps {
         script {
-          dockerImage = docker.build -t ${NAME} .
+          dockerImage = docker.build imagename
       }
     }
     stage('Deploy Image') {
