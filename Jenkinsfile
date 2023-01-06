@@ -5,6 +5,7 @@ pipeline {
         timestamps()
     }
     environment {
+        APP = "petclinic"
     	registry = "ekimkuznetsov/petclinic"
     	registryCredential = 'dockerhub-petclinic'
     }
@@ -30,8 +31,8 @@ pipeline {
             steps{
                 script {
                     docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push("${env.BUILD_NUMBER}")
-                    dockerImage.push("latest")
+                    dockerImage.push("${APP}.${env.BUILD_NUMBER}")
+                    dockerImage.push("${APP}.latest")
                     }
                 }
             }
