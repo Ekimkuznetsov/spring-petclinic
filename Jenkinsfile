@@ -5,7 +5,7 @@ pipeline {
         timestamps()
     }
     environment {
-    	registry = "Ekimkuznetsov/petclinic"
+    	registry = "ekimkuznetsov/petclinic"
     	registryCredential = 'dockerhub-petclinic'
     }
     stages {
