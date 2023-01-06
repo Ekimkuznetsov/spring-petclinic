@@ -1,32 +1,39 @@
 pipeline {
-  agent any
-  environment {
-    imagename = "petclinic"
-    VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
-    IMAGE = "${NAME}:${VERSION}"
-    registry = "Ekimkuznetsov/petclinic"
-    registryCredential = 'dockerhub-petclinic'
-    dockerImage = ''
-  }
-
-  stages {
-    stage('Checkout') {
-      steps {
-        checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'petclinic', url: 'https://github.com/Ekimkuznetsov/spring-petclinic.git']])
-      }
+    agent any
+    options{
+        buildDiscarder(logRotator(numToKeepStr: '5', daysToKeepStr: '5'))
+        timestamps()
     }
-    stage('Build') {
-      steps {
-        sh './mvnw package'   
-      }
+    environment {
+    	registry = "Ekimkuznetsov/petclinic"
+    	registryCredential = 'dockerhub-petclinic'
     }
-    stage('Create Artifact') {
-      steps {
-        script {
-          dockerImage = docker.build imagename
+    stages {
+    	stage('Checkout') {
+      	    steps {
+            checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs:     [[credentialsId: 'petclinic', url: 'https://github.com/Ekimkuznetsov/spring-petclinic.git']])
+            }
         }
-      }
+        stage('Build') {
+            steps {
+                sh './mvnw package'   
+            }
+        }
+        stage('Create Artifact') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Deploy Image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) 
+                    dockerImage.push()
+                }
+            }
+        }
     }
-  }
 }
 
