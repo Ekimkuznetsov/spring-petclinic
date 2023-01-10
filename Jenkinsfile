@@ -31,7 +31,7 @@ pipeline {
             steps{
                 script {
                     docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push("${APP}.1.0.${BUILDS_THIS_YEAR}")
+                    dockerImage.push("${APP}.${env.BUILD_NUMBER}")
                     dockerImage.push("${APP}.latest")
                     }
                 }
