@@ -1,7 +1,6 @@
 pipeline {
     agent any
     environment {
-        APP = "petclinic"
         PROJECT_ID = 'qwiklabs-gcp-03-8577cfd41faa'
     	CLUSTER_NAME = 'bootcamp'
         LOCATION = 'us-east1-c'
@@ -14,12 +13,12 @@ pipeline {
                 echo "Deployment started ..."
                 sh 'ls -ltr'
                 sh 'pwd'
-                step([$class: 'com.google.jenkins.plugins.k8sengine.KubernetesEngineBuilder', \
-                  projectId: env.PROJECT_ID, \
-                  clusterName: env.CLUSTER_NAME, \
-                  location: env.LOCATION, \
-                  manifestPattern: 'petclinic-deployment.yaml', \
-                  credentialsId: env.CREDENTIALS_ID, \
+                step([$class: 'KubernetesEngineBuilder', 
+                  projectId: env.PROJECT_ID, 
+                  clusterName: env.CLUSTER_NAME, 
+                  location: env.LOCATION, 
+                  manifestPattern: 'petclinic-deployment.yaml', 
+                  credentialsId: env.CREDENTIALS_ID, 
                   verifyDeployments: true])
                 
             }
