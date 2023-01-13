@@ -1,10 +1,11 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = 'qwiklabs-gcp-02-3120356a2c88'
+        APP = "petclinic"
+        PROJECT_ID = 'qwiklabs-gcp-03-8577cfd41faa'
     	CLUSTER_NAME = 'bootcamp'
-        LOCATION = 'us-east5-a'
-        CREDENTIALS_ID = 'qwiklabs-gcp-02-3120356a2c88'
+        LOCATION = 'us-east1-c'
+        CREDENTIALS_ID = 'qwiklabs-gcp-03-8577cfd41faa'
     }
     
     stages {
@@ -13,7 +14,7 @@ pipeline {
                 echo "Deployment started ..."
                 sh 'ls -ltr'
                 sh 'pwd'
-                step([$class: 'KubernetesEngineBuilder', \
+                step([$class: 'com.google.jenkins.plugins.k8sengine.KubernetesEngineBuilder', \
                   projectId: env.PROJECT_ID, \
                   clusterName: env.CLUSTER_NAME, \
                   location: env.LOCATION, \
