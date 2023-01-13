@@ -11,7 +11,7 @@ pipeline {
         stage('Deploy to K8s') {
             script {
                     docker.withRegistry( '', registryCredential ) {
-                    docker login)
+                    docker login
                     }
             }
             steps{
@@ -30,9 +30,4 @@ pipeline {
         }    
     }
 }    
-script {
-                    docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push("${APP}.${env.BUILD_NUMBER}")
-                    dockerImage.push("${APP}.latest")
-                    }
-                }
+
