@@ -9,6 +9,11 @@ pipeline {
     
     stages {
         stage('Deploy to K8s') {
+            script {
+                    docker.withRegistry( '', registryCredential ) {
+                    docker login)
+                    }
+            }
             steps{
                 echo "Deployment started ..."
                 sh 'ls -ltr'
@@ -25,3 +30,9 @@ pipeline {
         }    
     }
 }    
+script {
+                    docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push("${APP}.${env.BUILD_NUMBER}")
+                    dockerImage.push("${APP}.latest")
+                    }
+                }
