@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    environment {
+        PROJECT_ID = 'qwiklabs-gcp-02-3120356a2c88'
+    	CLUSTER_NAME = 'bootcamp'
+        LOCATION = 'us-east5-a'
+        CREDENTIALS_ID = 'qwiklabs-gcp-02-3120356a2c88'
+    }
+    
+    stages {
+        stage('Deploy to K8s') {
+            steps{
+                echo "Deployment started ..."
+                sh 'ls -ltr'
+                sh 'pwd'
+                sh "sed -i 's/petclinic:latest/petclinic:${env.BUILD_NUMBER}/g' petclinic-deployment.yaml"
+                step([$class: 'KubernetesEngineBuilder', \
+                  projectId: env.PROJECT_ID, \
+                  clusterName: env.CLUSTER_NAME, \
+                  location: env.LOCATION, \
+                  manifestPattern: 'petclinic-deployment.yaml', \
+                  credentialsId: env.CREDENTIALS_ID, \
+                  verifyDeployments: true])
+                }
+            }
+        }    
+    }
+}    
