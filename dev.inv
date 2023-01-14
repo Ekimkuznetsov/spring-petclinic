@@ -1,2 +1,2 @@
-[localhost]
+[web]
 192.168.49.1 #ansible_user=jenkins
