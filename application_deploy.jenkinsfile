@@ -1,33 +1,16 @@
 pipeline {
     agent any
-    environment {
-        PROJECT_ID = 'qwiklabs-gcp-00-6ff26fc3c8bf'
-    	CLUSTER_NAME = 'multi-tenant-cluster'
-        LOCATION = 'us-central1-a'
-        CREDENTIALS_ID = 'qwiklabs-gcp-00-6ff26fc3c8bf'
-    }
-    
-    stages {
-        stage('Deploy to K8s') {
-            steps {
-                script {
-                    withCredentials( \
-                                 [string(credentialsId: 'dockerhub',\
-                                 variable: 'dockerhub')]) {
-                        echo "Deployment started ..."
-                        sh 'ls -ltr'
-                        sh 'pwd'
-                        step([$class: 'KubernetesEngineBuilder', 
-                          projectId: env.PROJECT_ID, 
-                          clusterName: env.CLUSTER_NAME, 
-                          location: env.LOCATION, 
-                          manifestPattern: 'petclinic-deployment.yaml', 
-                          credentialsId: env.CREDENTIALS_ID, 
-                          verifyDeployments: true])
-                    }
-                }
-            } 
-        }  
-    } 
-}    
 
+    stages {
+        stage('SCM Checkout') {
+            steps {
+                git "https://github.com/Ekimkuznetsov/spring-petclinic.git"
+            }
+        }
+        stage('execute Ansible') {
+            steps {
+                ansiblePlaybook disableHostKeyChecking: true, installation: 'Ansible', inventory: 'dev.inv', playbook: 'kubectl_ansible.yml'
+            }
+        }
+    }
+}
