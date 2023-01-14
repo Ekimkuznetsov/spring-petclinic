@@ -18,7 +18,7 @@ pipeline {
                     }
                 }
             } 
-        }
+        
         stage('Deploy to K8s') {
             steps{
                 echo "Deployment started ..."
@@ -31,9 +31,9 @@ pipeline {
                   manifestPattern: 'petclinic-deployment.yaml', 
                   credentialsId: env.CREDENTIALS_ID, 
                   verifyDeployments: true])
-                }
+                
             }
-        }    
-    }
+        } 
+    }   
 }    
 
