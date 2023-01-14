@@ -13,7 +13,7 @@ pipeline {
                 script {
                     withCredentials( \
                                  [string(credentialsId: 'dockerhub',\
-                                 variable: 'dockerhub-petclinic')]) {
+                                 variable: 'dockerhub')]) {
                         sh "docker login -u ekimkuznetsov -p ${dockerhub}"
                     }
                 }
