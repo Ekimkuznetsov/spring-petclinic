@@ -1,10 +1,10 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = 'qwiklabs-gcp-03-8577cfd41faa'
-    	CLUSTER_NAME = 'bootcamp'
-        LOCATION = 'us-east1-c'
-        CREDENTIALS_ID = 'qwiklabs-gcp-03-8577cfd41faa'
+        PROJECT_ID = 'qwiklabs-gcp-00-6ff26fc3c8bf'
+    	CLUSTER_NAME = 'multi-tenant-cluster'
+        LOCATION = 'us-central1-a'
+        CREDENTIALS_ID = 'qwiklabs-gcp-00-6ff26fc3c8bf'
     }
     
     stages {

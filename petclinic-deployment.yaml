@@ -13,7 +13,7 @@ spec:
      spec:
          containers:
            - name: petclinic
-             image: ekimkuznetsov/petclinic:petclinic.latest
+             image: ekimkuznetsov/petclinic:latest
              imagePullPolicy: IfNotPresent
              ports:
                - containerPort: 8080
