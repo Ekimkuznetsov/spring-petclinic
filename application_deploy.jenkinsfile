@@ -12,9 +12,9 @@ pipeline {
             steps {
                 script {
                     withCredentials( \
-                                 [string(credentialsId: 'dockerhub-petclinic',\
+                                 [string(credentialsId: 'dockerhub',\
                                  variable: 'dockerhub-petclinic')]) {
-                        sh "docker login -u ekimkuznetsov -p ${dockerhub-petclinic}"
+                        sh "docker login -u ekimkuznetsov -p ${dockerhub}"
                     }
                 }
             } 
