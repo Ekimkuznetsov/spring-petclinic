@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('SCM Checkout') {
-            steps {
-                git "https://github.com/Ekimkuznetsov/spring-petclinic.git"
-            }
-        }
         stage('execute Ansible') {
             steps {
                 ansiblePlaybook disableHostKeyChecking: true, installation: 'Ansible', inventory: 'dev.inv', playbook: 'kubectl_ansible.yml'
