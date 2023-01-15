@@ -1,11 +1,13 @@
 ---
-  - name: "Playing with Ansible and Git"
+  - name: "Playing with Ansible and Kubernetes"
     hosts: localhost
     connection: local 
     tasks:
 
     - name: "just execute a ls -lrt command"
-      shell: "ls -lrt"
+      shell: "who"
       register: "output"
 
     - debug: var=output.stdout_lines
+    
+   
