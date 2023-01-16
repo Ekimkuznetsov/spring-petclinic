@@ -8,6 +8,9 @@
       vars_files:
         - ./defaults/main.yml
         - ./vars/main.yml
+      cluster_name: tf-gke-k8s
+      service_account_file: "~/Downloads/credentials.json"
+      project: qwiklabs-gcp-02-e93eeca48aba
       auth_kind: serviceaccount
       scopes:
       - https://www.googleapis.com/auth/compute
