@@ -55,6 +55,8 @@ pipeline {
 	        sh 'ls -ltr'
 		sh 'pwd'
 		sh "sed -i 's/tagversion/${env.BUILD_ID}/g' petclinic-deployment.yaml"
+		echo "Starting deployment of serviceLB.yaml"
+	        step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'serviceLB.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
 		echo "Starting deployment of deployment.yaml"
 		step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'petclinic-deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
 		echo "Deployment Finished ..."
