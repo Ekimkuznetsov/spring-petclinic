@@ -16,15 +16,6 @@
       - https://www.googleapis.com/auth/compute
     
     tasks:
-      - name: enable all the Google Cloud APIs we use
-        google.cloud.gcp_serviceusage_service:
-          name: '{{ item }}'
-          project: '{{ project }}'
-          auth_kind: application
-          state: present
-        loop:
-          - compute.googleapis.com
-          - container.googleapis.com
     
       - name: "Authentication to GCP"
         shell: gcloud auth login --cred-file="{{ service_account_file }}" 
