@@ -15,7 +15,6 @@ spec:
          containers:
            - name: petclinic
              image: ekimkuznetsov/petclinic:tagversion
-             imagePullPolicy: IfNotPresent
              ports:
                - containerPort: 8080
   replicas: 1
