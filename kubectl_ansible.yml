@@ -2,12 +2,36 @@
   - name: "Playing with Ansible and Kubernetes"
     hosts: localhost
     connection: local 
-    tasks:
-
-    - name: "just execute a ls -lrt command"
-      shell: "who"
-      register: "output"
-
-    - debug: var=output.stdout_lines
     
-   
+    
+    vars:
+      vars_files:
+        - ./defaults/main.yml
+        - ./vars/main.yml
+      auth_kind: serviceaccount
+      scopes:
+      - https://www.googleapis.com/auth/compute
+    
+    tasks:
+      - name: enable all the Google Cloud APIs we use
+        google.cloud.gcp_serviceusage_service:
+          name: '{{ item }}'
+          project: '{{ project }}'
+          auth_kind: application
+          state: present
+        loop:
+          - compute.googleapis.com
+          - container.googleapis.com
+    
+      - name: "Authentication to GCP"
+        shell: gcloud auth login --cred-file="{{ service_account_file }}" 
+        
+      - name: "kubeconfig formation"
+        shell: gcloud container clusters get-credentials "{{ cluster_name }}"
+      
+      - name: "Creation of dockercfg secret "
+        shell: kubectl create secret docker-registry dockerhubsecret --docker-server="{{DOCKER_REGISTRY_SERVER}}" --docker-username="{{DOCKER_USER}}" --docker-password="{{DOCKER_PASSWORD}}" --docker-email="{{DOCKER_EMAIL}}"
+        
+      - name: Create a Deployment by reading the definition from a local file
+        shell: kubectl apply -f "{{ deployment_path }}"
+
