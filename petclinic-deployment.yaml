@@ -1,7 +1,8 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: petclinic-deployment
+  name: petclinic
   labels:
      app: petclinic
 spec:
@@ -13,7 +14,7 @@ spec:
      spec:
          containers:
            - name: petclinic
-             image: ekimkuznetsov/petclinic:latest
+             image: ekimkuznetsov/petclinic:tagversion
              imagePullPolicy: IfNotPresent
              ports:
                - containerPort: 8080
@@ -33,6 +34,6 @@ spec:
   type: LoadBalancer  
   ports:
     - protocol: TCP
-      targetPort: 3000
+      targetPort: 8080
       port: 80
-      nodePort: 30000
+
