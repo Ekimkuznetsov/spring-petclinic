@@ -8,9 +8,9 @@ pipeline {
     
     environment {
         APP = "petclinic"
-        PROJECT_ID = 'qwiklabs-gcp-02-e107de3da2b1'
-        CLUSTER_NAME = 'scaling-demo'
-        LOCATION = 'us-central1-a'
+        PROJECT_ID = 'qwiklabs-gcp-02-3798004c6b7b'
+        CLUSTER_NAME = 'tf-gke-k8s'
+        LOCATION = 'us-west1-b'
         CREDENTIALS_ID = 'kubernetes'
     }
     
@@ -43,7 +43,7 @@ pipeline {
                     withCredentials([string(credentialsId: 'dockerhub', variable: 'USERPASS')]) {
             	        sh "docker login -u ekimkuznetsov -p ${USERPASS}"
 	            }
-	                dockerImage.push("${APP}.${env.BUILD_ID}")
+	                dockerImage.push("${env.BUILD_ID}")
                     
                 }
             }
@@ -55,9 +55,7 @@ pipeline {
 	        sh 'ls -ltr'
 		sh 'pwd'
 		sh "sed -i 's/tagversion/${env.BUILD_ID}/g' petclinic-deployment.yaml"
-		echo "Starting deployment of serviceLB.yaml"
-	        step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'serviceLB.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
-		echo "Starting deployment of deployment.yaml"
+		echo "Starting deployment of petclinic-deployment.yaml"
 		step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'petclinic-deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
 		echo "Deployment Finished ..."
             }
