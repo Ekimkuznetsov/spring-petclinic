@@ -52,6 +52,7 @@ pipeline {
         stage('Deploy to K8s') {
 	    steps{
 		echo "Deployment started ..."
+		gcloud config list
 	        sh 'ls -ltr'
 		sh 'pwd'
 		sh "sed -i 's/tagversion/${env.BUILD_ID}/g' petclinic-deployment.yaml"
