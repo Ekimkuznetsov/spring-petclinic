@@ -8,10 +8,10 @@ pipeline {
     
     environment {
         APP = "petclinic"
-        PROJECT_ID = 'qwiklabs-gcp-03-e3842010b94a'
+        PROJECT_ID = 'qwiklabs-gcp-02-f66c30123261'
         CLUSTER_NAME = 'scaling-demo'
         LOCATION = 'us-central1-a'
-        CREDENTIALS_ID = 'qwiklabs-gcp-03-e3842010b94a'
+        CREDENTIALS_ID = 'qwiklabs-gcp-02-f66c30123261'
     }
     
     stages {
@@ -40,11 +40,10 @@ pipeline {
             steps{
                 script {
                     echo "Pushing Docker Image"
-                    withCredentials([string(credentialsId: 'dockerhub', variable: 'USERPASS')]) {
-            	        sh "docker login -u ekimkuznetsov -p ${USERPASS}"
-	            }
-	                dockerImage.push("${env.BUILD_ID}")
-                    
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerID') {
+                            myapp.push("latest")
+                            myapp.push("${env.BUILD_ID}")
+                    }
                 }
             }
         }

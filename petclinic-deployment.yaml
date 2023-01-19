@@ -17,6 +17,7 @@ spec:
              image: ekimkuznetsov/petclinic:tagversion
              ports:
                - containerPort: 8080
+             imagePullPolicy: Always
   replicas: 1
   selector:
     matchLabels:
