@@ -8,7 +8,7 @@ pipeline {
     
     environment {
         APP = "petclinic"
-        PROJECT_ID = 'qwiklabs-gcp-02-3798004c6b7b'
+        PROJECT_ID = 'qwiklabs-gcp-04-d95eff2c36ce'
         CLUSTER_NAME = 'tf-gke-k8s'
         LOCATION = 'us-west1-b'
         CREDENTIALS_ID = 'kubernetes'
@@ -52,8 +52,6 @@ pipeline {
         stage('Deploy to K8s') {
 	    steps{
 		echo "Deployment started ..."
-		sh 'gcloud container cluster get-credentials env.CLUSTER_NAME'
-		sh 'gcloud config list'
 	        sh 'ls -ltr'
 		sh 'pwd'
 		sh "sed -i 's/tagversion/${env.BUILD_ID}/g' petclinic-deployment.yaml"
