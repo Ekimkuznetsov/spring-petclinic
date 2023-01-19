@@ -6,22 +6,26 @@ metadata:
   labels:
      app: petclinic
 spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: petclinic
   template:
      metadata:
        name: petclinic
        labels: 
          app: petclinic
+         tier: petclinic
      spec:
          containers:
            - name: petclinic
              image: ekimkuznetsov/petclinic:tagversion
              ports:
-               - containerPort: 8080
+               - containerPort: 5000
              imagePullPolicy: Always
   replicas: 1
-  selector:
-    matchLabels:
-      app: petclinic
+
       
 ---
 apiVersion: v1
