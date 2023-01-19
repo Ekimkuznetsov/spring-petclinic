@@ -41,8 +41,8 @@ pipeline {
                 script {
                     echo "Pushing Docker Image"
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerID') {
-                            myapp.push("latest")
-                            myapp.push("${env.BUILD_ID}")
+                            dockerImage.push("latest")
+                            dockerImage.push("${env.BUILD_ID}")
                     }
                 }
             }
