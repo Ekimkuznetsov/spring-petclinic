@@ -8,9 +8,9 @@ pipeline {
     
     environment {
         APP = "petclinic"
-        PROJECT_ID = 'qwiklabs-gcp-04-d95eff2c36ce'
-        CLUSTER_NAME = 'tf-gke-k8s'
-        LOCATION = 'us-west1-b'
+        PROJECT_ID = 'qwiklabs-gcp-03-e3842010b94a'
+        CLUSTER_NAME = 'scaling-demo'
+        LOCATION = 'us-central1-a'
         CREDENTIALS_ID = 'kubernetes'
     }
     
