@@ -20,7 +20,7 @@ spec:
      spec:
          containers:
            - name: petclinic
-             image: ekimkuznetsov/petclinic:tagversion
+             image: ekimkuznetsov/petclinic:latest
              ports:
                - containerPort: 5000
              imagePullPolicy: Always
