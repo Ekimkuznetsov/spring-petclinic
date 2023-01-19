@@ -11,7 +11,7 @@ pipeline {
         PROJECT_ID = 'qwiklabs-gcp-03-e3842010b94a'
         CLUSTER_NAME = 'scaling-demo'
         LOCATION = 'us-central1-a'
-        CREDENTIALS_ID = 'kubernetes'
+        CREDENTIALS_ID = 'qwiklabs-gcp-03-e3842010b94a'
     }
     
     stages {
