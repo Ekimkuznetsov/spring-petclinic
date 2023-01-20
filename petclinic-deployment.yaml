@@ -24,6 +24,8 @@ spec:
              ports:
                - containerPort: 5000
              imagePullPolicy: Always
+         imagePullSecrets:
+           - name: dockerhubsecret
   replicas: 1
 
       

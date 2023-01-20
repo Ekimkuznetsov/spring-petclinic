@@ -8,10 +8,10 @@ pipeline {
     
     environment {
         APP = "petclinic"
-        PROJECT_ID = 'qwiklabs-gcp-02-f66c30123261'
-        CLUSTER_NAME = 'scaling-demo'
+        PROJECT_ID = 'qwiklabs-gcp-00-33abbde5ecfc'
+        CLUSTER_NAME = 'hello-demo-cluster'
         LOCATION = 'us-central1-a'
-        CREDENTIALS_ID = 'qwiklabs-gcp-02-f66c30123261'
+        CREDENTIALS_ID = 'qwiklabs-gcp-00-33abbde5ecfc'
     }
     
     stages {
@@ -51,7 +51,7 @@ pipeline {
 
 	stage('Deploy to GKE') {
             steps{
-                sh "sed -i 's/tagversion:latest/tagversion:${env.BUILD_ID}/g' petclinic-deployment.yaml"
+                sh "sed -i 's/tagversion/${env.BUILD_ID}/g' petclinic-deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'petclinic-deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
         }
